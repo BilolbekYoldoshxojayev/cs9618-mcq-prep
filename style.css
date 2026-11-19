@@ -1,10 +1,11 @@
 :root{
+  color-scheme:light dark;
   --bg:#f6f7f9;--card:#fff;--ink:#16202b;--muted:#5a6672;--line:#d9dee4;
   --accent:#1f5fbf;--accent-ink:#fff;--ok:#16794a;--ok-bg:#e3f4ea;--bad:#b3261e;--bad-bg:#fbe6e4;--warn:#8a5a00;--warn-bg:#fff3d6;
   --code:#eef1f5;--radius:10px;
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
+  :root{
     --bg:#10151b;--card:#18202a;--ink:#e8edf2;--muted:#9aa7b4;--line:#2b3744;
     --accent:#6ea3f5;--accent-ink:#0b1320;--ok:#5fd09a;--ok-bg:#12301f;--bad:#ff8f87;--bad-bg:#3a1a18;--warn:#f2c36b;--warn-bg:#33270c;--code:#0e141b;
   }
@@ -26,11 +27,11 @@ h3{font-size:1.02rem;margin:1rem 0 .3rem}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1rem;margin:.8rem 0}
 .grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .tile{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1rem}
-.tile:hover{border-color:var(--accent)}
+@media (hover:hover){.tile:hover{border-color:var(--accent)}}
 .tile b{display:block;margin-bottom:.2rem}
 .muted{color:var(--muted);font-size:.9rem}
 button,.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:.55rem .9rem;border-radius:8px;text-decoration:none;display:inline-block}
-button:hover,.btn:hover{border-color:var(--accent)}
+@media (hover:hover){button:hover,.btn:hover{border-color:var(--accent)}}
 button.primary,.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
 button:disabled{opacity:.5;cursor:not-allowed}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
@@ -67,3 +68,41 @@ th{background:var(--code)}
 label.chk{display:flex;gap:.5rem;align-items:center;margin:.25rem 0}
 input[type=number],select{font:inherit;padding:.3rem .5rem;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);width:5rem}
 @media (max-width:520px){html{font-size:16px}.brand span{display:none}}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+label.btn:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+h1{text-wrap:balance}
+.top nav a{padding:.55rem .2rem}
+.nav button{min-width:44px;min-height:44px}
+.opt{min-height:48px}
+.opt .ot{flex:1}
+.opt[aria-checked="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--card));box-shadow:inset 0 0 0 1px var(--accent)}
+.opt[aria-checked="true"] .l{color:var(--accent)}
+.tag{font-size:.78rem;font-weight:700;margin-left:auto;white-space:nowrap;align-self:center}
+.opt.ok .tag{color:var(--ok)}.opt.bad .tag{color:var(--bad)}
+.opt.ok{border-width:2px}.opt.bad{border-width:2px;border-style:dashed}
+.tilebtns{margin-top:.6rem}
+.tile .btn{padding:.35rem .7rem;font-size:.9rem}
+.warnline{color:var(--warn);font-weight:600}
+.resume{border-color:var(--accent)}
+details.map{margin:.4rem 0}
+details summary{cursor:pointer;padding:.4rem 0;font-weight:600}
+details .nav button.a,.nav button.a{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.nav button[aria-current="step"],.nav button.cur{outline:2px solid var(--ink);outline-offset:1px}
+.nav.rgrid{gap:.4rem}
+.rgrid button{display:flex;flex-direction:column;align-items:center;line-height:1.1;min-width:48px}
+.rgrid button small{font-size:.7rem;color:inherit;opacity:.8}
+.rgrid .ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.rgrid .bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.rgrid .none{border-style:dashed}
+body.exam .top{position:static}
+body.exam .top nav{display:none}
+.examBar{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:center;justify-content:space-between;background:var(--card);border-bottom:1px solid var(--line);margin:0 -1rem;padding:.5rem 1rem}
+.examBar .binfo{font-size:.9rem}
+.tbox{font-weight:600}
+button.sm{padding:.3rem .7rem;font-size:.9rem}
+.actions{position:sticky;bottom:0;z-index:6;display:flex;gap:.5rem;justify-content:space-between;background:var(--card);border-top:1px solid var(--line);margin:1rem -1rem 0;padding:.6rem 1rem calc(.6rem + env(safe-area-inset-bottom))}
+.actions button{flex:1;min-height:46px}
+h2.qh{font-size:1.05rem;margin:.8rem 0 .2rem}
+h2.qh:focus,h1:focus{outline:none}
+@media print{.top,.examBar,.actions,button,.btn{display:none!important}body{background:#fff;color:#000}.card{break-inside:avoid}}
