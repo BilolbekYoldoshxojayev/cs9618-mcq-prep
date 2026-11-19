@@ -237,3 +237,56 @@ CIR ← [MDR]
 <li><b>Debugging:</b> single stepping, breakpoints, variable/expression watch, report window.</li>
 </ul>`}
 };
+
+window.NOTES.sheet = {html: `
+<p class="muted">One page of the facts and formulas that questions in chapters 1–5 use. Use the browser's print function to save it as a PDF.</p>
+<div class="grid">
+<div class="card"><h3>Prefixes and powers of 2</h3>
+<p>kibi 2<sup>10</sup> = 1024 · mebi 2<sup>20</sup> · gibi 2<sup>30</sup> · tebi 2<sup>40</sup><br>kilo 10<sup>3</sup> · mega 10<sup>6</sup> · giga 10<sup>9</sup> · tera 10<sup>12</sup></p>
+<p>2<sup>8</sup>=256 · 2<sup>10</sup>=1024 · 2<sup>12</sup>=4096 · 2<sup>16</sup>=65 536 · 2<sup>20</sup>=1 048 576 · 2<sup>24</sup>=16 777 216 · 2<sup>32</sup>=4 294 967 296</p>
+<p>1 byte = 8 bits. n address lines → 2<sup>n</sup> locations.</p></div>
+<div class="card"><h3>Number systems</h3>
+<p>Place values: 128 64 32 16 8 4 2 1</p>
+<p>Hex: 0–9 then A=10 B=11 C=12 D=13 E=14 F=15; one hex digit = 4 bits.</p>
+<p>BCD: each denary digit → 4 bits (259 = 0010 0101 1001).</p></div>
+<div class="card"><h3>Negative numbers (n bits)</h3>
+<p><b>Two's complement:</b> invert all bits, add 1. MSB has weight −2<sup>n−1</sup>. Range −2<sup>n−1</sup> to 2<sup>n−1</sup>−1 (8 bits: −128 to +127).</p>
+<p><b>One's complement:</b> invert all bits only. <b>Sign-and-magnitude:</b> MSB is the sign.</p>
+<p>A − B = A + (two's complement of B); ignore the carry out. Overflow: result outside the range.</p></div>
+<div class="card"><h3>File sizes</h3>
+<p><b>Bitmap</b> (bytes) = width × height × colour depth ÷ 8<br>colours = 2<sup>depth</sup></p>
+<p><b>Sound</b> (bytes) = sampling rate (Hz) × resolution (bits) × seconds ÷ 8 (× channels)</p>
+<p><b>RLE:</b> WWWWBB → 4W 2B (lossless; lossy = permanent loss, e.g. MP3, JPEG).</p>
+<p>ASCII 7 bits (128) · extended ASCII 8 bits (256) · Unicode: many more characters.</p></div>
+<div class="card"><h3>Logic gates</h3>
+<table><tr><th>A B</th><th>AND</th><th>OR</th><th>NAND</th><th>NOR</th><th>XOR</th></tr>
+<tr><td>0 0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>0 1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>1 0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>1 1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr></table>
+<p>NOT: 0→1, 1→0. 3 inputs → 8 rows.</p></div>
+<div class="card"><h3>Registers and fetch</h3>
+<p>PC next instruction address · MAR address to access · MDR data/instruction · CIR current instruction · ACC working value · IX index · status flags.</p>
+<pre class="code">MAR ← [PC]
+PC  ← [PC] + 1
+MDR ← [[MAR]]
+CIR ← [MDR]</pre>
+<p>Interrupts are checked at the end of each cycle; save registers, ISR address → PC, run ISR, restore.</p></div>
+<div class="card"><h3>Assembly (one register: ACC)</h3>
+<p><b>Load:</b> LDM #n (immediate) · LDD addr (direct) · LDI addr (indirect) · LDX addr (indexed: addr + IX) · LDR #n (IX) · STO addr</p>
+<p><b>Arithmetic:</b> ADD · SUB (addr or #n/Bn/&amp;n) · INC · DEC (ACC or IX)</p>
+<p><b>Compare/jump:</b> CMP addr/#n · CMI addr · JPE (if equal) · JPN (if not equal) · JMP</p>
+<p><b>I/O:</b> IN (key → ASCII in ACC) · OUT (shows the character) · END</p>
+<p><b>Bits:</b> AND · OR · XOR (clear / set / toggle with a mask) · LSL #n · LSR #n</p>
+<p># denary · B binary · &amp; hex</p></div>
+<div class="card"><h3>Shifts and masks</h3>
+<p>LSL: zeros in at right, ×2 each place. LSR: zeros in at left, ÷2. Arithmetic right keeps the sign bit. Cyclic: bits wrap round.</p>
+<p>AND mask: 0 clears, 1 keeps (test a bit). OR mask: 1 sets. XOR mask: 1 toggles.</p></div>
+<div class="card"><h3>Networks</h3>
+<p>IPv4: 32 bits, four numbers 0–255. IPv6: 128 bits, eight groups of four hex digits, :: once.</p>
+<p>Switch: forwards to one device (MAC). Router: between networks (IP). Bridge: joins segments. Repeater: regenerates signal. WAP: wireless access. Modem: digital ↔ analogue. NIC: network interface.</p>
+<p>CSMA/CD: listen, send, collision → jam signal, random wait, retry. DNS: domain name → IP address.</p></div>
+<div class="card"><h3>Memory and software</h3>
+<p>SRAM: fast, dear, no refresh (cache). DRAM: refresh, cheap, dense (main memory). ROM non-volatile. PROM once · EPROM UV · EEPROM electrical.</p>
+<p>Compiler: whole program first, executable, hides source. Interpreter: line by line, stops at first error. Assembler: assembly → machine code. DLL: loaded when needed, shared.</p></div>
+</div>`};

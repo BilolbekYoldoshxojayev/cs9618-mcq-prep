@@ -88,8 +88,8 @@ window.QBANK = [
 "code": null,
 "opts": [
 "stored in a different number system from the operands",
-"negative when a positive result was expected",
-"too large to be represented in the number of bits available",
+"stored in a different number system from the operands used",
+"too large to be stored in the number of bits available",
 "rounded because it has too many decimal places"
 ],
 "ans": 2,
@@ -1207,9 +1207,9 @@ window.QBANK = [
 "q": "Which is a drawback of cloud computing for an organisation?",
 "code": null,
 "opts": [
-"Access needs a reliable internet connection and a third party stores the data",
+"It needs a reliable internet connection and a third party holds the data",
 "Files can only be accessed from a single registered computer",
-"The organisation must buy, house and maintain all of the servers itself",
+"Files can only be accessed from a single registered computer at a time",
 "Storage capacity cannot be increased once a contract has been agreed"
 ],
 "ans": 0,
@@ -1415,7 +1415,7 @@ window.QBANK = [
 "q": "Which statement about on-demand bit streaming is correct?",
 "code": null,
 "opts": [
-"A pre-recorded file is held on a server and starts playing once part of it is buffered",
+"A pre-recorded file is held on a server and plays once part of it is buffered",
 "The video is encoded and sent as the event happens, so it cannot be rewound",
 "The whole file must be downloaded in full before any playback can begin",
 "No buffer is needed because the server sends the data at the playback rate"
@@ -1464,9 +1464,9 @@ window.QBANK = [
 "code": null,
 "opts": [
 "To convert digital signals to analogue for the telephone line and back",
-"To encrypt the data so that it cannot be intercepted on the line",
-"To translate private IP addresses into public IP addresses",
-"To store the data temporarily until the telephone line is free"
+"To store the data temporarily until the telephone line is free to use",
+"To translate private IP addresses into public IP addresses for the router",
+"To encrypt the data so that it cannot be intercepted on the telephone line"
 ],
 "ans": 0,
 "why": "The PSTN carries analogue signals; a modem modulates and demodulates."
@@ -1528,9 +1528,9 @@ window.QBANK = [
 "code": null,
 "opts": [
 "Private IP addresses are required for a device to be reached from anywhere on the internet",
-"Public IP addresses are given to devices inside a LAN by the router",
+"Public IP addresses are given out to devices inside a LAN by the router",
 "Private IP addresses are unique across the whole of the internet and cannot be reused",
-"A public IP address is unique on the internet but private addresses can be reused in other LANs"
+"A public IP address is unique on the internet but private addresses can be reused"
 ],
 "ans": 3,
 "why": "Private addresses are not routable on the internet; hiding devices behind a router improves security."
@@ -1689,7 +1689,7 @@ window.QBANK = [
 "opts": [
 "A DNS server works the address out from the name of the laptop",
 "The address is permanently built into the network card when it is made",
-"A DHCP server, often in the router, assigns a free address for a limited time",
+"A DHCP server, often in the router, assigns a free address for a time",
 "The laptop chooses any address that is not already in its own cache"
 ],
 "ans": 2,
@@ -1737,7 +1737,7 @@ window.QBANK = [
 "opts": [
 "It carries on sending because the switch repairs the damaged frame later",
 "It resends the frame at once but at a higher bit rate than before",
-"It stops sending, transmits a jamming signal, then waits a random time before resending",
+"It stops sending, sends a jamming signal, then waits a random time and resends",
 "It waits a fixed time agreed with the other device and then resends"
 ],
 "ans": 2,
@@ -1815,10 +1815,10 @@ window.QBANK = [
 "q": "Why does a computer need secondary storage as well as primary memory?",
 "code": null,
 "opts": [
-"To store the results of calculations while the ALU is working",
-"To keep programs and data permanently, even when the power is switched off",
-"To hold the instruction that is currently being decoded",
-"To give the processor faster access to data than primary memory can"
+"To give the processor faster access to data than primary memory can",
+"To keep programs and data permanently, even when the power is off",
+"To store the results of calculations while the ALU is working on them",
+"To hold the instruction that is currently being decoded by the CU"
 ],
 "ans": 1,
 "why": "Primary memory (RAM) is volatile; secondary storage is non-volatile and has a larger capacity."
@@ -1975,10 +1975,10 @@ window.QBANK = [
 "q": "Which is an example of an embedded system?",
 "code": null,
 "opts": [
-"A laptop running a word processor",
+"A desktop computer used for playing games",
 "The controller inside a washing machine",
-"A desktop computer used for gaming",
-"A web server in a data centre"
+"A laptop running a word processing program",
+"A web server in a large data centre"
 ],
 "ans": 1,
 "why": "Embedded systems are dedicated computer systems built into a larger device."
@@ -2103,7 +2103,7 @@ window.QBANK = [
 "q": "A virtual reality headset gives the user a view that changes as they turn their head. Which components make this possible?",
 "code": null,
 "opts": [
-"Two small screens, one for each eye, and sensors that track head movement",
+"Two small screens, one for each eye, and sensors tracking head movement",
 "A touchscreen display and a GPS receiver that tracks the user",
 "One large flat screen and a microphone that detects speech commands",
 "A printer and a scanner that capture the user's surroundings in 3D"
@@ -2568,7 +2568,7 @@ window.QBANK = [
 "code": null,
 "opts": [
 "The status flags set by the last comparison carried out by the ALU",
-"The data or instruction just fetched from, or about to be written to, memory",
+"The data or instruction fetched from, or about to go to, memory",
 "The address of the next instruction that is to be fetched from memory",
 "The address of the memory location that is about to be accessed"
 ],
@@ -2647,10 +2647,10 @@ window.QBANK = [
 "q": "What is the function of the control unit (CU)?",
 "code": null,
 "opts": [
-"To convert the digital data into analogue data for output",
-"To carry out all of the arithmetic and logic operations",
+"To store programs and data permanently when the power is off",
+"To convert the digital data into analogue data for output devices",
 "To decode instructions and signal the other components what to do",
-"To store programs and data permanently when power is off"
+"To carry out all of the arithmetic and logic operations on data"
 ],
 "ans": 2,
 "why": "The ALU does the calculations; the CU directs the operation."
@@ -2664,7 +2664,7 @@ window.QBANK = [
 "code": null,
 "opts": [
 "The number of memory locations that can be addressed is increased",
-"More bits can be moved in each clock cycle, which can improve performance",
+"More bits can be moved in each cycle, which can improve speed",
 "The clock speed of the processor is increased as a result",
 "Instructions are executed in a different order from before"
 ],
@@ -2920,9 +2920,9 @@ window.QBANK = [
 "code": null,
 "opts": [
 "The address used is the operand plus the contents of the index register",
-"The address is found by adding an offset to the current instruction's address",
+"The address is found by adding an offset to the current address",
 "The operand is the address of the address of the data",
-"The operand is the data value that is to be used immediately by the CPU"
+"The operand is the address of the address of the data to be used"
 ],
 "ans": 1,
 "why": "Relative addressing is useful for jumps, because code stays valid if it is loaded elsewhere."
@@ -3415,7 +3415,7 @@ window.QBANK = [
 "q": "Which is a feature of a USB port?",
 "code": null,
 "opts": [
-"It connects many types of peripheral and can supply them with power",
+"It connects many types of device and can supply power",
 "It carries an analogue video signal and nothing else",
 "It can only be used to connect a single external monitor",
 "It needs a different type of port for each type of device"
@@ -3593,7 +3593,7 @@ window.QBANK = [
 "opts": [
 "Allocating blocks of memory to each of the programs that are running",
 "Sharing out processor time between all of the running programs",
-"Providing a directory structure and controlling how files are named and moved",
+"Providing a directory structure and controlling how files are named",
 "Installing the correct drivers for any newly connected devices"
 ],
 "ans": 2,
@@ -3626,7 +3626,7 @@ window.QBANK = [
 "Providing the user with an editor with context-sensitive prompts",
 "Compressing files that are not often used to save space on the disk",
 "Checking every file on the disk for signatures of known malware",
-"Using drivers to communicate with peripherals and handle their interrupts"
+"Using drivers to communicate with and control peripheral devices"
 ],
 "ans": 3,
 "why": "The OS uses drivers to control hardware and to manage input/output."
@@ -3719,7 +3719,7 @@ window.QBANK = [
 "q": "What is the purpose of back-up software?",
 "code": null,
 "opts": [
-"To copy files so they can be restored if the originals are lost or damaged",
+"To copy files so they can be restored if they are lost or damaged",
 "To scan the files on a disk for any malicious code before use",
 "To format a new disk so that it can be used to store files",
 "To rearrange files on a disk drive so that they are stored together"
@@ -3944,9 +3944,9 @@ window.QBANK = [
 "code": null,
 "opts": [
 "Dynamic syntax checking",
-"A report window",
-"Pretty-printing",
-"Single stepping"
+"Single stepping through code",
+"Pretty-printing of the code",
+"A variable report window"
 ],
 "ans": 0,
 "why": "Dynamic syntax checks provide initial error detection as code is typed."

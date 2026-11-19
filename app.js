@@ -246,6 +246,12 @@ function weak() {
   runQuiz(presentAll(shuffle(pool)), `Due for review (${pool.length})`);
 }
 
+function sheet() {
+  const body = el('div', {class: 'notes'});
+  body.innerHTML = NOTES.sheet ? NOTES.sheet.html : '';
+  mount(el('h1', {}, 'Cheat sheet'), body, el('div', {class: 'row'}, el('button', {onclick: () => window.print()}, 'Print / save as PDF')));
+}
+
 function progress() {
   const srs = loadSrs(), hist = store.get('hist', []), now = Date.now();
   const rows = [1, 2, 3, 4, 5].map(c => { const s = chapterStats(c); return el('tr', {}, el('td', {}, `${c}. ${CH[c]}`), el('td', {}, `${s.seen}/${s.total}`), el('td', {}, s.pct === null ? '–' : `${s.pct}%`), el('td', {}, s.due)); });
@@ -355,6 +361,7 @@ function runMock(list, state) {
   let optEls = [], navEls = [], info = null, view = 'q';
 
   const save = () => store.set('activeMock', {ids: list.map(q => q.id), ord: list.map(q => q.opts), sel: st.sel, flag: st.flag, i: st.i, endAt: st.endAt, startedAt: st.startedAt, secs: st.secs});
+  const pace = () => { const per = st.secs * 1000 / n, el_ = Date.now() - st.startedAt, target = Math.min(n, Math.floor(el_ / per) + 1); const behind = target - (st.i + 1); return behind >= 3 ? ` · pace: be on Q${target}` : ''; };
   const counts = () => `${st.sel.filter(s => s >= 0).length}/${n} answered · ${st.flag.filter(Boolean).length} flagged`;
   function submit(auto) {
     const mins = Math.max(1, Math.round((Date.now() - st.startedAt) / 60000));
@@ -362,11 +369,11 @@ function runMock(list, state) {
     results(list, st.sel, st.flag, mins, auto);
   }
   function bar(extra) {
-    info = el('span', {class: 'binfo'}, view === 'q' ? `Q ${st.i + 1}/${n} · ${counts()}` : counts());
+    info = el('span', {class: 'binfo'}, view === 'q' ? `Q ${st.i + 1}/${n} · ${counts()}${pace()}` : counts());
     return el('div', {class: 'examBar'}, info, el('span', {class: 'tbox'}, 'Time ', clock), extra);
   }
   function refresh() {
-    if (info) info.textContent = view === 'q' ? `Q ${st.i + 1}/${n} · ${counts()}` : counts();
+    if (info) info.textContent = view === 'q' ? `Q ${st.i + 1}/${n} · ${counts()}${pace()}` : counts();
     navEls.forEach((b, k) => { b.className = (st.sel[k] >= 0 ? 'a ' : '') + (st.flag[k] ? 'f ' : '') + (k === st.i ? 'cur' : ''); b.setAttribute('aria-label', `Question ${k + 1}${st.sel[k] >= 0 ? ', answered' : ', not answered'}${st.flag[k] ? ', flagged' : ''}`); if (k === st.i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
     optEls.forEach((b, k) => { const on = st.sel[st.i] === k; b.setAttribute('aria-checked', on); b.tabIndex = on || (st.sel[st.i] < 0 && k === 0) ? 0 : -1; });
     save();
@@ -420,6 +427,7 @@ function runMock(list, state) {
     const left = Math.round((st.endAt - Date.now()) / 1000);
     clock.textContent = fmt(left) + (left <= 300 && left > 0 ? ' · 5 min left' : '');
     clock.classList.toggle('low', left <= 300);
+    if (view === 'q' && info) info.textContent = `Q ${st.i + 1}/${n} · ${counts()}${pace()}`;
     if (left <= 0) submit(true);
   }, 1000);
 }
@@ -484,6 +492,7 @@ function route() {
   if (parts[0] === 'mock') return mockSetup();
   if (parts[0] === 'weak') return weak();
   if (parts[0] === 'progress') return progress();
+  if (parts[0] === 'sheet') return sheet();
   home();
 }
 window.addEventListener('hashchange', route);

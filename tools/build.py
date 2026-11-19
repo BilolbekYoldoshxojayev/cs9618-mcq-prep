@@ -57,6 +57,7 @@ import fixes
 fixes.apply(banks)
 fixes.apply(banks, fixes2.FIXES2)
 fixes.apply(banks, fixes2.FIXES3)
+fixes.apply(banks, fixes2.FIXES4)
 for qs in banks:
     for q in qs:
         validate(q)
