@@ -224,18 +224,21 @@ FIXES = [
 ]
 
 
-def apply(banks):
+def apply(banks, table=None):
+    table = FIXES if table is None else table
     used = set()
     for qs in banks:
         for q in qs:
-            hits = [i for i, f in enumerate(FIXES) if q["q"].startswith(f[0])]
+            hits = [i for i, f in enumerate(table) if q["q"].startswith(f[0])]
             assert len(hits) <= 1, ("ambiguous fix prefix", q["q"], hits)
             if hits:
                 i = hits[0]
                 used.add(i)
-                _, c, w = FIXES[i]
+                c, w = table[i][1], table[i][2]
+                if len(table[i]) > 3:
+                    q["q"] = table[i][3]
                 if c:
                     q["correct"] = c
                 q["wrongs"] = [nw if nw else ow for nw, ow in zip(w, q["wrongs"])]
-    missing = [FIXES[i][0] for i in range(len(FIXES)) if i not in used]
+    missing = [table[i][0] for i in range(len(table)) if i not in used]
     assert not missing, ("unmatched fixes", missing)

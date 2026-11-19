@@ -3,7 +3,7 @@ import json, random, sys, os
 from collections import Counter
 
 sys.path.insert(0, os.path.dirname(__file__))
-import ch1, ch2, ch3, ch4, ch5
+import ch1, ch2, ch3, ch4, ch5, extra, fixes2
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "data", "questions.js")
 rng = random.Random(2027)
@@ -48,13 +48,15 @@ def validate(q):
 
 banks = []
 for m in (ch1, ch2, ch3, ch4, ch5):
-    qs = m.static() + m.generated()
+    qs = m.static() + m.generated() + getattr(extra, m.__name__)()
     for q in qs:
         validate(q)
     banks.append(qs)
 
 import fixes
 fixes.apply(banks)
+fixes.apply(banks, fixes2.FIXES2)
+fixes.apply(banks, fixes2.FIXES3)
 for qs in banks:
     for q in qs:
         validate(q)

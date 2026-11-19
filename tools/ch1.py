@@ -138,7 +138,7 @@ def generated():
         b = format(n, "08b")
         c = str(n)
         w = distract(c, [int(b[::-1], 2), n - 128 if n >= 128 else n + 64, n + 16, n - 1],
-                     rng, lambda r: n + r.randint(-20, 20))
+                     rng, lambda r: n + r.randint(-20, 20), ranked=True)
         out.append(Q(CH, t, 1, f"What is the denary value of the unsigned 8-bit binary number {b}?", c, w,
                      f"Add the place values of the 1 bits: {n}."))
 
@@ -159,7 +159,7 @@ def generated():
         sw = int(hs[::-1], 16)
         c = str(h)
         w = distract(c, [sw, int(hs[0], 16) * 10 + int(hs[1], 16), h + 16, h - 16, h + 1], rng,
-                     lambda r: h + r.randint(-30, 30))
+                     lambda r: h + r.randint(-30, 30), ranked=True)
         out.append(Q(CH, t, 1, f"What is the denary value of the hexadecimal number {hs}?", c, w,
                      f"{hs[0]} × 16 + {hs[1]} = {h}."))
 
@@ -193,7 +193,7 @@ def generated():
         sm = -(u & 0x7F)
         oc = -(255 - u)
         w = distract(c, [u, sm, oc, v - 1 if False else -(256 - u) - 0 if False else v + 1], rng,
-                     lambda r: v + r.randint(-9, 9))
+                     lambda r: v + r.randint(-9, 9), ranked=True)
         out.append(Q(CH, t, 2, f"What is the denary value of the 8-bit two's complement number {b}?", c, w,
                      f"The most significant bit has place value -128: -128 + {u - 128} = {v}."))
 
@@ -207,7 +207,7 @@ def generated():
         w = distract(c, [f"{s} (no overflow)", f"{s - 256} (no overflow)", f"{256 - s} (overflow has occurred)",
                          f"{s} (overflow has occurred)"], rng)
         out.append(Q(CH, t, 2,
-                     f"Two positive numbers {format(a, '08b')} and {format(bb, '08b')} are added using 8-bit two's complement. What does the result represent?",
+                     f"Two positive numbers {format(a, '08b')} and {format(bb, '08b')} are added using 8-bit two's complement. What denary value does the 8-bit result show, and has overflow occurred?",
                      c, w,
                      f"{a} + {bb} = {s} exceeds +127, so the sign bit becomes 1 and the stored value is {s} - 256 = {s - 256}. Overflow."))
 
@@ -216,10 +216,12 @@ def generated():
         n = rng.randint(120, 989)
         d = str(n)
         c = " ".join(format(int(x), "04b") for x in d)
-        w = distract(c, [format(n, "012b"), " ".join(format(int(x), "04b") for x in d[::-1]),
-                         " ".join(format(int(x) + 1, "04b") for x in d if int(x) < 9) or format(n, "012b"),
-                         " ".join(format(int(x, 16), "04b") for x in
-                                  [format(n, "03X")[i] for i in range(3)])], rng)
+        b12 = format(n, "012b")
+        w = distract(c, [" ".join(b12[k:k + 4] for k in (0, 4, 8)),
+                         " ".join(format(int(x), "04b") for x in d[::-1]),
+                         " ".join(format((int(x) + 1) % 10, "04b") for x in d),
+                         " ".join(format(int(h, 16), "04b") for h in format(n, "03X"))], rng,
+                     lambda r_: " ".join(format((int(x) + r_.randint(1, 3)) % 10 if r_.random() < 0.5 else int(x), "04b") for x in d))
         out.append(Q(CH, t, 1, f"Which is the Binary Coded Decimal (BCD) representation of the denary number {n}?", c, w,
                      "Convert each denary digit separately into a 4-bit binary number."))
 
@@ -234,7 +236,7 @@ def generated():
     # number of colours (1 mark)
     for d in (6, 10):
         c = str(2 ** d)
-        w = distract(c, [d, d * d, 2 ** (d + 1) // 1 if False else 2 * d, 2 ** (d - 1)], rng)
+        w = distract(c, [d, d * d, 2 * d, 2 ** (d - 1), 2 ** (d + 1), 2 ** (d + 2)], rng, ranked=True)
         out.append(Q(CH, "Multimedia", 1, f"A bitmap image uses a colour depth of {d} bits. How many different colours can it display?",
                      c, w, f"2^{d} = {c}."))
 
@@ -244,7 +246,7 @@ def generated():
         kib = bits / 8 / 1024
         fmt = (lambda x: f"{x:g} KiB")
         c = fmt(kib)
-        w = distract(c, [fmt(kib * 8), fmt(kib / 8), fmt(bits / 8 / 1000), fmt(kib * 2)], rng)
+        w = distract(c, [fmt(kib * 8), fmt(kib / 8), fmt(bits / 8 / 1000), fmt(kib * 2), fmt(kib / 2), fmt(kib * 4), fmt(kib * 3)], rng, ranked=True)
         out.append(Q(CH, "Multimedia", 2,
                      f"A bitmap image is {w_} pixels wide and {h_} pixels high with a colour depth of {d_} bits. Ignoring the file header, what is the file size?",
                      c, w,
@@ -255,7 +257,7 @@ def generated():
         by = rate * bits_ * secs // 8
         fmt = (lambda x: f"{int(x):,} bytes")
         c = fmt(by)
-        w = distract(c, [fmt(by * 8), fmt(by // secs), fmt(by // 8), fmt(by * 2)], rng)
+        w = distract(c, [fmt(by * 8), fmt(by // secs), fmt(by // 8), fmt(by * 2), fmt(by // 2), fmt(by * 4), fmt(by * 3 // 2)], rng, ranked=True)
         out.append(Q(CH, "Multimedia", 2,
                      f"A mono sound is recorded for {secs} seconds with a sampling rate of {rate} Hz and a sampling resolution of {bits_} bits. What is the size of the sound data?",
                      c, w,

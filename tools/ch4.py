@@ -175,7 +175,7 @@ def generated():
     # address bus width
     for n in (16, 24):
         c = f"{2 ** n:,}"
-        w = distract(c, [f"{n ** 2:,}", f"{2 ** (n - 1):,}", f"{2 * n:,}", f"{2 ** (n + 1):,}"], rng)
+        w = distract(c, [f"{n ** 2:,}", f"{2 ** (n - 1):,}", f"{2 * n:,}", f"{2 ** (n + 1):,}", f"{2 ** (n - 2):,}", f"{2 ** (n + 2):,}"], rng, ranked=True)
         out.append(Q(CH, a, 1, f"A processor has an address bus with {n} lines. What is the maximum number of memory locations it can address?",
                      c, w, f"2^{n} = {c}."))
 
@@ -247,7 +247,7 @@ def generated():
         table = "\n".join(f"{k}: {v}" for k, v in sorted(mem.items()))
         code = f"Memory (address: contents)\n{table}\n\nProgram\n{prog}"
         c = str(res)
-        w = distract(c, cands, rng, lambda r_: res + r_.randint(-9, 9))
+        w = distract(c, cands, rng, lambda r_: res + r_.randint(-9, 9), ranked=True)
         why = {"direct": "LDD loads the contents of the first address, ADD adds the contents of the second, STO stores the sum.",
                "indirect": "LDI uses the contents of the given address as the address of the data (a pointer).",
                "indexed": "LDX uses address = operand + IX, where IX was set by LDR."}[kind]
@@ -259,14 +259,14 @@ def generated():
         # variant A: times executed
         n = target // 2
         c = str(n)
-        w = [str(target), str(n - 1), str(n + 1)]
+        w = distract(c, [target, n - 1, n + 1, n + 2, n - 2, 2 * n], rng, ranked=True)
         out.append(Q(CH, s, 2, "How many times is the instruction ADD #2 executed?", c, w,
                      f"ACC goes 2, 4, ... {target}. JPN jumps back while ACC is not equal to {target}, so ADD #2 runs {n} times.",
                      code=prog))
     for target in (6, 10):
         prog = f"      LDM #0\nloop: ADD #2\n      CMP #{target}\n      JPN loop\n      OUT\n      END"
         c = str(target)
-        w = [str(target - 2), str(target // 2), str(target + 2)]
+        w = distract(c, [target - 2, target // 2, target + 2, target + 4, target - 4, 2 * target], rng, ranked=True)
         out.append(Q(CH, s, 2, "What is the value in the accumulator when OUT is executed?", c, w,
                      f"The loop stops when ACC equals {target}.", code=prog))
     return out
